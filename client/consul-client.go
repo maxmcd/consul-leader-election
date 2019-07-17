@@ -1,8 +1,8 @@
 package client
 
 import (
-	log "github.com/Sirupsen/logrus"
 	"github.com/hashicorp/consul/api"
+	log "github.com/sirupsen/logrus"
 )
 
 type ConsulClient struct {
@@ -10,8 +10,8 @@ type ConsulClient struct {
 }
 
 func (cc *ConsulClient) GetHealthChecks(state string, options *api.QueryOptions) ([]*api.HealthCheck, error) {
-    checks, _, err := cc.Client.Health().State("any", options)
-    return checks, err
+	checks, _, err := cc.Client.Health().State("any", options)
+	return checks, err
 }
 
 func (cc *ConsulClient) GetSession(sessionName string) string {
@@ -51,9 +51,9 @@ func (cc *ConsulClient) GetAgentName() string {
 	return agent["Config"]["NodeName"].(string)
 }
 
-func (cc *ConsulClient) PutKey(key *api.KVPair) (error) {
-    _, err := cc.Client.KV().Put(key, nil)
-    return err
+func (cc *ConsulClient) PutKey(key *api.KVPair) error {
+	_, err := cc.Client.KV().Put(key, nil)
+	return err
 }
 
 func (cc *ConsulClient) GetKey(keyName string) (*api.KVPair, error) {
